@@ -7,6 +7,41 @@
 ##############################
 ##### Autostart programs #####
 ##############################
+### Examples:
+### Start a program
+##exec --no-startup-id "konsole --profile scratchpad"
+#
+### Always start a program (this includes i3 in-place restarts)
+##exec_always --no-startup-id "konsole --profile scratchpad"
+#
+### Move a program to the scratchpad (This can fail if the program is slow to start)
+##exec i3-msg '[title=scratchpad] move scratchpad'
+#
+### Always move a program to the scratchpad, regardless if its started automatically or by the user
+##for_window [title="^scratchpad"] move scratchpad
+
+
+##### Scratchpad Terminal
+exec --no-startup-id "konsole --profile scratchpad"
+
+# Always move the terminal to the scratchpad
+for_window [title="^scratchpad"] move scratchpad
+
+
+##### weechat
+exec --no-startup-id "konsole --profile weechat-console"
+
+# Always move the terminal to the scratchpad
+for_window [title="^weechat-console"] move scratchpad
+
+
+##### Signal Private Messenger
+exec --no-startup-id signal-desktop
+
+# Move the startup instance of signal to the scratchpad
+# Note: signal takes FOREVER to start, and we dont want to have to wait 2 seconds before moving it
+#exec_always "sleep 2; i3-msg '[title=Signal] move scratchpad'"
+for_window [title="^Signal"] move scratchpad
 
 
 
@@ -244,11 +279,8 @@ floating_modifier $mod
 bindsym $mod+b workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
 
-# Move currently focused window to scratchpad
-bindsym $mod+Shift+minus move scratchpad
-
-# Show the next scratchpad window or hide the focused scratchpad window.
-bindsym $mod+minus scratchpad show
+# Center focused window
+bindsym $mod+c move position center
 
 # Move focused window
 bindsym $mod+Shift+j move left
@@ -289,3 +321,20 @@ bindsym $mod+Ctrl+0 move container to workspace $ws10; workspace $ws10
 # Navigate workspaces (next / previous)
 bindsym $mod+Shift+Next move container to workspace next; workspace next
 bindsym $mod+Shift+Prior move container to workspace prev; workspace prev
+
+##### Scratchpad configuration
+# Move currently focused window to scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+bindsym $mod+minus scratchpad show
+
+# Show / hide Signal Private Messenger
+bindsym $supl+s [title="^Signal"] scratchpad show
+
+# Show / hide weechat-console
+bindsym $supl+w [title="^weechat-console"] scratchpad show
+
+# Show / hide Konsole "scratchpad"
+bindsym $supl+c [title="^scratchpad"] scratchpad show
+
